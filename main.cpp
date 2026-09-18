@@ -96,7 +96,12 @@ int main() {
         }
     }
     else if (duomenuBudas == 2) {
-        ifstream failas("kursiokai.txt");
+        string failoPavadinimas;
+
+        cout << "Iveskite failo pavadinima: ";
+        cin >> failoPavadinimas;
+
+        ifstream failas(failoPavadinimas);
 
         if (!failas) {
             cout << "Nepavyko atidaryti failo.\n";
