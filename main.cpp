@@ -22,17 +22,19 @@ int main() {
     cout << "Iveskite studento pavarde: ";
     cin >> studentas.pavarde;
 
-    int n;
-    cout << "Kiek namu darbu pazymiu norite ivesti? ";
-    cin >> n;
+    int pazymys;
+    char pasirinkimas;
 
-    cout << "Iveskite namu darbu pazymius: ";
-
-    for (int i = 0; i < n; i++) {
-        int pazymys;
+    do {
+        cout << "Iveskite namu darbu pazymi: ";
         cin >> pazymys;
+
         studentas.namuDarbai.push_back(pazymys);
-    }
+
+        cout << "Ar norite ivesti dar viena pazymi? (t/n): ";
+        cin >> pasirinkimas;
+
+    } while (pasirinkimas == 't' || pasirinkimas == 'T');
     
     cout << "Iveskite egzamino pazymi: ";
     cin >> studentas.egzaminas;
