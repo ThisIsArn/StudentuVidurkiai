@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -43,15 +44,31 @@ int main() {
     }
 
     double vidurkis = suma / studentas.namuDarbai.size();
-    double galutinis = 0.5 * vidurkis + 0.5 * studentas.egzaminas;
 
-    cout << "\nVardas          Pavarde         Galutinis (Vid.)\n";
-    cout << "------------------------------------------------\n";
+    sort(studentas.namuDarbai.begin(), studentas.namuDarbai.end());
+
+    double mediana;
+    int dydis = studentas.namuDarbai.size();
+
+    if (dydis % 2 == 0) {
+        mediana = (studentas.namuDarbai[dydis / 2 - 1] +
+                   studentas.namuDarbai[dydis / 2]) / 2.0;
+    }
+    else {
+        mediana = studentas.namuDarbai[dydis/2];
+    }
+
+    double galutinisVid = 0.5 * vidurkis + 0.5 * studentas.egzaminas;
+    double galutinisMed = 0.5 * mediana + 0.5 * studentas.egzaminas;
+
+    cout << "\nVardas          Pavarde         Galutinis (Vid.)     Galutinis (Med.)\n";
+    cout << "--------------------------------------------------------------------\n";
 
     cout << left
          << setw(16) << studentas.vardas
          << setw(16) << studentas.pavarde
-         << fixed << setprecision(2) << galutinis << endl;
+         << setw(20) << fixed << setprecision(2) << galutinisVid
+         << galutinisMed << endl;
     
     return 0;
 }
