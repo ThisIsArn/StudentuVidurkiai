@@ -101,11 +101,15 @@ int main() {
         cout << "Iveskite failo pavadinima: ";
         cin >> failoPavadinimas;
 
-        ifstream failas(failoPavadinimas);
+        ifstream failas;
+        failas.open(failoPavadinimas);
 
-        if (!failas) {
-            cout << "Nepavyko atidaryti failo.\n";
-            return 1;
+        while (!failas) {
+            cout << "Nepavyko atidaryti failo. Bandykite dar karta: ";
+            cin >> failoPavadinimas;
+
+            failas.clear();
+            failas.open(failoPavadinimas);
         }
 
         string antraste;
