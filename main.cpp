@@ -125,6 +125,11 @@ int main() {
         failas.close();
     }
 
+    sort(studentai.begin(), studentai.end(),
+        [](const Studentas& a, const Studentas& b) {
+            return a.pavarde < b.pavarde;
+        });
+
     cout << "\nVardas          Pavarde         Galutinis (Vid.)     Galutinis (Med.)\n";
     cout << "--------------------------------------------------------------------\n";
 
