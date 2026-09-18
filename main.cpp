@@ -3,6 +3,8 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -14,6 +16,8 @@ struct Studentas {
 };
 
 int main() {
+    srand(time(nullptr));
+
     vector<Studentas> studentai;
     char darStudentas = 't';
 
@@ -26,23 +30,53 @@ int main() {
         cout << "Iveskite studento pavarde: ";
         cin >> studentas.pavarde;
 
-        int pazymys;
-        char pasirinkimas;
+        int ivedimoBudas;
 
-        do {
-            cout << "Iveskite namu darbu pazymi: ";
-           cin >> pazymys;
+        cout << "\nPasirinkite pazymiu ivedimo buda:\n";
+        cout << "1 - Ivesti pazymius ranka\n";
+        cout << "2 - Generuoti pazymius atsitiktinai\n";
+        cout << "Pasirinkimas: ";
+        cin >> ivedimoBudas;
 
-           studentas.namuDarbai.push_back(pazymys);
+        if (ivedimoBudas == 1) {
+            int pazymys;
+            char pasirinkimas;
 
-           cout << "Ar norite ivesti dar viena pazymi? (t/n): ";
-           cin >> pasirinkimas;
+            do {
+                cout << "Iveskite namu darbu pazymi: ";
+                cin >> pazymys;
 
-        } while (pasirinkimas == 't' || pasirinkimas == 'T');
+                studentas.namuDarbai.push_back(pazymys);
+
+                cout << "Ar norite ivesti dar viena pazymi? (t/n): ";
+                cin >> pasirinkimas;
+
+            } while (pasirinkimas == 't' || pasirinkimas == 'T');
     
-        cout << "Iveskite egzamino pazymi: ";
-        cin >> studentas.egzaminas;
+            cout << "Iveskite egzamino pazymi: ";
+            cin >> studentas.egzaminas;
+        }
+        else if (ivedimoBudas == 2) {
+            int kiekis;
 
+            cout << "Kiek namu darbu pazymiu sugeneruoti? ";
+            cin >> kiekis;
+
+            for (int i = 0; i < kiekis; i++) {
+                studentas.namuDarbai.push_back(rand() % 10 + 1);
+            }
+
+            studentas.egzaminas = rand() % 10 + 1;
+
+            cout << "Sugeneruoti namu darbu pazymiai: ";
+
+            for (int pazymys : studentas.namuDarbai) {
+                cout << pazymys << " ";
+            }
+
+            cout << "\nSugeneruotas egzamino pazymys: "
+                 << studentas.egzaminas << endl;
+        }
         studentai.push_back(studentas);
 
         cout << "Ar norite ivesti dar viena studenta? (t/n): ";
