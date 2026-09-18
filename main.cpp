@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -105,12 +106,22 @@ int main() {
         string antraste;
         getline(failas, antraste);
 
+        stringstream ss(antraste);
+        string stulpelis;
+        int ndKiekis = 0;
+
+        while (ss >> stulpelis) {
+            if (stulpelis.substr(0, 2) == "ND") {
+                ndKiekis++;
+            }
+        }
+
         Studentas studentas;
 
         while (failas >> studentas.vardas >> studentas.pavarde) {
             int pazymys;
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < ndKiekis; i++) {
                 failas >> pazymys;
                 studentas.namuDarbai.push_back(pazymys);
             }
