@@ -1,0 +1,6 @@
+\# StudentuVidurkiai
+
+
+
+Objektinio programavimo užduotis.
+
