@@ -1,0 +1,6 @@
+Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egz. 
+Arnas Stanelis 8 9 7 10 6 9 
+Jonas Jonaitis 5 7 8 6 9 8 
+Tadas Tadaitis 10 9 10 8 9 10 
+Mantas Mantaitis 6 5 7 8 6 7 
+Petras Petraitis 9 8 10 9 8 9

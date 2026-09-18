@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -19,68 +20,109 @@ int main() {
     srand(time(nullptr));
 
     vector<Studentas> studentai;
-    char darStudentas = 't';
 
-    while (darStudentas == 't' || darStudentas == 'T') {
+    int duomenuBudas;
+
+    cout << "Pasirinkite duomenu ivedimo buda:\n";
+    cout << "1 - Ivesti studentus\n";
+    cout << "2 - Nuskaityti studentus is failo\n";
+    cout << "Pasirinkimas: ";
+    cin >> duomenuBudas;
+
+    if (duomenuBudas == 1) {
+        char darStudentas = 't';
+
+        while (darStudentas == 't' || darStudentas == 'T') {
+            Studentas studentas;
+    
+            cout << "Iveskite studento varda: ";
+            cin >> studentas.vardas;
+
+            cout << "Iveskite studento pavarde: ";
+            cin >> studentas.pavarde;
+
+            int ivedimoBudas;
+
+            cout << "\nPasirinkite pazymiu ivedimo buda:\n";
+            cout << "1 - Ivesti pazymius ranka\n";
+            cout << "2 - Generuoti pazymius atsitiktinai\n";
+            cout << "Pasirinkimas: ";
+            cin >> ivedimoBudas;
+
+            if (ivedimoBudas == 1) {
+                int pazymys;
+                char pasirinkimas;
+
+                do {
+                    cout << "Iveskite namu darbu pazymi: ";
+                    cin >> pazymys;
+
+                    studentas.namuDarbai.push_back(pazymys);
+
+                    cout << "Ar norite ivesti dar viena pazymi? (t/n): ";
+                    cin >> pasirinkimas;
+
+                } while (pasirinkimas == 't' || pasirinkimas == 'T');
+    
+                cout << "Iveskite egzamino pazymi: ";
+                cin >> studentas.egzaminas;
+            }
+            else if (ivedimoBudas == 2) {
+                int kiekis;
+
+                cout << "Kiek namu darbu pazymiu sugeneruoti? ";
+                cin >> kiekis;
+
+                for (int i = 0; i < kiekis; i++) {
+                    studentas.namuDarbai.push_back(rand() % 10 + 1);
+                }
+
+                studentas.egzaminas = rand() % 10 + 1;
+
+                cout << "Sugeneruoti namu darbu pazymiai: ";
+
+                for (int pazymys : studentas.namuDarbai) {
+                    cout << pazymys << " ";
+                }
+
+                cout << "\nSugeneruotas egzamino pazymys: "
+                     << studentas.egzaminas << endl;
+            }
+            studentai.push_back(studentas);
+
+            cout << "Ar norite ivesti dar viena studenta? (t/n): ";
+            cin >> darStudentas;
+        }
+    }
+    else if (duomenuBudas == 2) {
+        ifstream failas("kursiokai.txt");
+
+        if (!failas) {
+            cout << "Nepavyko atidaryti failo.\n";
+            return 1;
+        }
+
+        string antraste;
+        getline(failas, antraste);
+
         Studentas studentas;
-    
-        cout << "Iveskite studento varda: ";
-        cin >> studentas.vardas;
 
-        cout << "Iveskite studento pavarde: ";
-        cin >> studentas.pavarde;
-
-        int ivedimoBudas;
-
-        cout << "\nPasirinkite pazymiu ivedimo buda:\n";
-        cout << "1 - Ivesti pazymius ranka\n";
-        cout << "2 - Generuoti pazymius atsitiktinai\n";
-        cout << "Pasirinkimas: ";
-        cin >> ivedimoBudas;
-
-        if (ivedimoBudas == 1) {
+        while (failas >> studentas.vardas >> studentas.pavarde) {
             int pazymys;
-            char pasirinkimas;
 
-            do {
-                cout << "Iveskite namu darbu pazymi: ";
-                cin >> pazymys;
-
+            for (int i = 0; i < 5; i++) {
+                failas >> pazymys;
                 studentas.namuDarbai.push_back(pazymys);
-
-                cout << "Ar norite ivesti dar viena pazymi? (t/n): ";
-                cin >> pasirinkimas;
-
-            } while (pasirinkimas == 't' || pasirinkimas == 'T');
-    
-            cout << "Iveskite egzamino pazymi: ";
-            cin >> studentas.egzaminas;
-        }
-        else if (ivedimoBudas == 2) {
-            int kiekis;
-
-            cout << "Kiek namu darbu pazymiu sugeneruoti? ";
-            cin >> kiekis;
-
-            for (int i = 0; i < kiekis; i++) {
-                studentas.namuDarbai.push_back(rand() % 10 + 1);
             }
 
-            studentas.egzaminas = rand() % 10 + 1;
+            failas >> studentas.egzaminas;
 
-            cout << "Sugeneruoti namu darbu pazymiai: ";
+            studentai.push_back(studentas);
 
-            for (int pazymys : studentas.namuDarbai) {
-                cout << pazymys << " ";
-            }
-
-            cout << "\nSugeneruotas egzamino pazymys: "
-                 << studentas.egzaminas << endl;
+            studentas = Studentas();
         }
-        studentai.push_back(studentas);
 
-        cout << "Ar norite ivesti dar viena studenta? (t/n): ";
-        cin >> darStudentas;
+        failas.close();
     }
 
     cout << "\nVardas          Pavarde         Galutinis (Vid.)     Galutinis (Med.)\n";
